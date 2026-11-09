@@ -1,0 +1,146 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/game_over.gd" id="1"]
+[ext_resource type="Script" path="res://scenes/ui/teclado.gd" id="2"]
+
+[node name="FinRecorrido" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Fondo" type="ColorRect" parent="."]
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 60.0
+offset_right = 80.0
+offset_bottom = 304.0
+color = Color(0, 0, 0, 0.8)
+
+[node name="Nombre" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.0
+offset_top = 66.0
+offset_right = 70.0
+offset_bottom = 300.0
+theme_override_constants/separation = 2
+
+[node name="Titulo" type="Label" parent="Nombre"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.32, 0.32, 1)
+theme_override_font_sizes/font_size = 12
+text = "FIN DEL RECORRIDO"
+horizontal_alignment = 1
+
+[node name="Razon" type="Label" parent="Nombre"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
+theme_override_font_sizes/font_size = 8
+text = "Chocaste con un camión"
+horizontal_alignment = 1
+
+[node name="Distancia" type="Label" parent="Nombre"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Distancia: 0 m"
+horizontal_alignment = 1
+
+[node name="NuevoRecord" type="Label" parent="Nombre"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0, 1)
+theme_override_font_sizes/font_size = 9
+text = "¡NUEVO RÉCORD!"
+horizontal_alignment = 1
+
+[node name="Indicacion" type="Label" parent="Nombre"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
+theme_override_font_sizes/font_size = 8
+text = "Escribe tu nombre:"
+horizontal_alignment = 1
+
+[node name="NombreCampo" type="LineEdit" parent="Nombre"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
+placeholder_text = "Tu nombre"
+alignment = 1
+max_length = 12
+editable = false
+
+[node name="Teclado" type="GridContainer" parent="Nombre"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 7
+script = ExtResource("2")
+
+[node name="OK" type="Button" parent="Nombre"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+text = "OK"
+
+[node name="Puntajes" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.0
+offset_top = 66.0
+offset_right = 70.0
+offset_bottom = 300.0
+theme_override_constants/separation = 4
+
+[node name="Titulo" type="Label" parent="Puntajes"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.7, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "PUNTAJES"
+horizontal_alignment = 1
+
+[node name="Tabla" type="GridContainer" parent="Puntajes"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 0
+columns = 3
+
+[node name="FueraTop" type="Label" parent="Puntajes"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
+theme_override_font_sizes/font_size = 8
+text = "No entraste al top 10"
+horizontal_alignment = 1
+
+[node name="OtraVez" type="Button" parent="Puntajes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+text = "Otra vez"
+
+[node name="Menu" type="Button" parent="Puntajes"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+text = "Menú"
+
+[connection signal="letter" from="Nombre/Teclado" to="." method="type_char"]
+[connection signal="erase" from="Nombre/Teclado" to="." method="backspace"]
+[connection signal="pressed" from="Nombre/OK" to="." method="save_name"]
+[connection signal="pressed" from="Puntajes/OtraVez" to="." method="_on_otra_vez"]
+[connection signal="pressed" from="Puntajes/Menu" to="." method="_on_menu"]

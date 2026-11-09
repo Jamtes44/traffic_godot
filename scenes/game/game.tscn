@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/game/game.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/road/road.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/player/moto.tscn" id="3"]
+[ext_resource type="Script" path="res://scenes/spawner/spawner.gd" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/objects/camion.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://scenes/objects/valla.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://scenes/objects/peaton.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://scenes/objects/bici.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://scenes/objects/hueco.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://scenes/objects/gas.tscn" id="10"]
+[ext_resource type="PackedScene" path="res://scenes/objects/escudo.tscn" id="11"]
+[ext_resource type="PackedScene" path="res://scenes/objects/vive.tscn" id="12"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="13"]
+[ext_resource type="PackedScene" path="res://scenes/ui/game_over.tscn" id="14"]
+
+[node name="Juego" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Camara" type="Camera2D" parent="."]
+position = Vector2(90, 160)
+
+[node name="Carretera" parent="." instance=ExtResource("2")]
+
+[node name="Objetos" type="Node2D" parent="."]
+
+[node name="Moto" parent="." instance=ExtResource("3")]
+position = Vector2(90, 270)
+
+[node name="Spawner" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("4")
+obstacles = Array[PackedScene]([ExtResource("5"), ExtResource("6"), ExtResource("7"), ExtResource("8"), ExtResource("9"), ExtResource("9")])
+power_ups = Array[PackedScene]([ExtResource("10"), ExtResource("10"), ExtResource("11"), ExtResource("12")])
+target = NodePath("../Objetos")
+
+[node name="Motor" type="AudioStreamPlayer" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="UI" instance=ExtResource("13")]
+
+[node name="FinRecorrido" parent="UI" instance=ExtResource("14")]
+visible = false
+
+[connection signal="crashed" from="Moto" to="." method="end_run"]
+[connection signal="picked" from="Moto" to="." method="_on_moto_picked"]
+[connection signal="retry" from="UI/FinRecorrido" to="." method="retry"]
+[connection signal="menu" from="UI/FinRecorrido" to="." method="go_menu"]

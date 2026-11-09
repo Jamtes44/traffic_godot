@@ -1,0 +1,2 @@
+# Fin de línea uniforme (LF) para todos los archivos de texto: evita diffs falsos entre Windows y otros equipos
+* text=auto eol=lf

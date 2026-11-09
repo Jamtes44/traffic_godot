@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/objects/obstacle.gd" id="1"]
+[ext_resource type="Texture2D" path="res://art/bici.png" id="2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(14, 6)
+
+[node name="Bici" type="Area2D"]
+monitoring = false
+script = ExtResource("1")
+placement = 2
+cross_speed = 50.0
+display_name = "una bicicleta"
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2")
+
+[node name="Forma" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")

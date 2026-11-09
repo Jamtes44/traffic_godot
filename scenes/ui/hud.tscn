@@ -1,0 +1,101 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/hud.gd" id="1"]
+[ext_resource type="Texture2D" path="res://art/gas.png" id="2"]
+[ext_resource type="Texture2D" path="res://art/escudo.png" id="3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fondo"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lleno"]
+bg_color = Color(1, 0.7, 0, 1)
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1")
+
+[node name="Barra" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 14.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="Distancia" type="Label" parent="Barra"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 3.0
+offset_right = 80.0
+offset_bottom = 14.0
+text = "0 m"
+vertical_alignment = 1
+
+[node name="Casco" type="TextureRect" parent="Barra"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -74.0
+offset_top = 3.0
+offset_right = -66.0
+offset_bottom = 11.0
+texture = ExtResource("3")
+
+[node name="IconoGas" type="TextureRect" parent="Barra"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -62.0
+offset_top = 2.0
+offset_right = -54.0
+offset_bottom = 12.0
+texture = ExtResource("2")
+
+[node name="Gasolina" type="ProgressBar" parent="Barra"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -52.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = 10.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fondo")
+theme_override_styles/fill = SubResource("StyleBoxFlat_lleno")
+value = 100.0
+show_percentage = false
+
+[node name="Golpes" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_left = 3.0
+offset_top = 16.0
+offset_right = 100.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(1, 0.32, 0.32, 1)
+theme_override_font_sizes/font_size = 8
+text = "Golpe leve 1/2"
+
+[node name="Turbo" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -30.0
+offset_top = 16.0
+offset_right = 30.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(1, 0.84, 0, 1)
+text = "TURBO"
+horizontal_alignment = 1

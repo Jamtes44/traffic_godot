@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/player/moto.gd" id="1"]
+[ext_resource type="Texture2D" path="res://art/moto.png" id="2"]
+[ext_resource type="Texture2D" path="res://art/llama.png" id="3"]
+[ext_resource type="Texture2D" path="res://art/aura.png" id="4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(8, 16)
+
+[node name="Moto" type="Area2D"]
+monitorable = false
+script = ExtResource("1")
+
+[node name="Llama" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, 8)
+texture = ExtResource("3")
+offset = Vector2(0, 2.5)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2")
+
+[node name="Aura" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("4")
+
+[node name="Forma" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")

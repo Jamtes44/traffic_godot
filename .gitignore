@@ -1,0 +1,10 @@
+# Caché del editor de Godot (se regenera sola)
+.godot/
+
+# Proyecto Gradle de Android (si algún día se activa "use_gradle_build")
+/android/
+
+# APK / builds
+*.apk
+*.aab
+build/
