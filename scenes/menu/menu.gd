@@ -4,6 +4,7 @@ extends Node2D
 const GAME := "res://scenes/game/game.tscn"
 
 func _ready() -> void:
+	%Salir.visible = not OS.has_feature("web")  # en el navegador se cierra la pestaña, no el juego
 	%Record.text = "Récord: %d m" % Save.best()
 	%Brillo.value = Save.brightness
 	%Volumen.value = Save.volume

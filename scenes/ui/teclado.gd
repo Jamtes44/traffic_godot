@@ -10,7 +10,7 @@ const LETTERS := "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
 func _ready() -> void:
 	for ch in LETTERS:
 		_key(ch, letter.emit.bind(ch))
-	_key("←", erase.emit)  # 28 teclas = 4 filas exactas de 7
+	_key("<", erase.emit)  # borrar; "<" porque la fuente web no trae "←". 28 teclas = 4 filas de 7
 
 func focus_first() -> void:
 	get_child(0).grab_focus()

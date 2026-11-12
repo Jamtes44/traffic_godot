@@ -10,10 +10,14 @@ config_version=5
 
 [application]
 
-config/name="Moto Runner"
+config/name="Gamedev - Traffic Runner"
 run/main_scene="res://scenes/menu/menu.tscn"
-config/features=PackedStringArray("4.6")
 config/quit_on_go_back=false
+config/features=PackedStringArray("4.6")
+boot_splash/bg_color=Color(0.055, 0.13, 0.15, 1)
+boot_splash/stretch_mode=0
+boot_splash/image="res://art/logo.png"
+config/icon="res://art/icon.png"
 
 [autoload]
 
@@ -34,10 +38,8 @@ theme/custom="res://scenes/ui/theme.tres"
 
 [rendering]
 
-; Compatibility (OpenGL ES 3) = funciona en la mayoría de Android TV; el juego es 2D simple
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
-
-textures/canvas_textures/default_texture_filter=0
 2d/snap/snap_2d_transforms_to_pixel=true

@@ -1,0 +1,12 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/logo.gd" id="1"]
+
+[node name="Logo" type="Control"]
+custom_minimum_size = Vector2(150, 84)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 150.0
+offset_bottom = 84.0
+mouse_filter = 2
+script = ExtResource("1")

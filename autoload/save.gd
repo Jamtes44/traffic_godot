@@ -1,9 +1,10 @@
 extends Node
 # Autoload "Save": tabla de puntajes y ajustes (brillo, volumen) guardados en user://record.cfg.
-#   Windows: %APPDATA%/Godot/app_userdata/Moto Runner/record.cfg
+#   Windows: %APPDATA%/Godot/app_userdata/Gamedev - Traffic Runner/record.cfg
 #   Android: almacenamiento interno de la app (se borra al desinstalar).
 
 const PATH := "user://record.cfg"
+const OLD_DIR := "Moto Runner"  # nombre anterior del juego: su carpeta de datos se migra una vez
 const TOP := 10
 
 var brightness := 1.0
@@ -13,6 +14,9 @@ var _dimmer := CanvasModulate.new()  # brillo: multiplica el color del mundo en 
 
 func _ready() -> void:
 	add_child(_dimmer)
+	var old_file := OS.get_user_data_dir().get_base_dir().path_join(OLD_DIR).path_join("record.cfg")
+	if not FileAccess.file_exists(PATH) and FileAccess.file_exists(old_file):
+		DirAccess.copy_absolute(old_file, ProjectSettings.globalize_path(PATH))
 	var cfg := ConfigFile.new()
 	if cfg.load(PATH) == OK:
 		brightness = cfg.get_value("juego", "brillo", 1.0)
