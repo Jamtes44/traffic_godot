@@ -14,6 +14,12 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/vive.tscn" id="12"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="13"]
 [ext_resource type="PackedScene" path="res://scenes/ui/game_over.tscn" id="14"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pausa.tscn" id="15"]
+[ext_resource type="Texture2D" path="res://art/camion.png" id="ins_camion"]
+[ext_resource type="Texture2D" path="res://art/bici.png" id="ins_bici"]
+[ext_resource type="Texture2D" path="res://art/gas.png" id="ins_gas"]
+[ext_resource type="Texture2D" path="res://art/vive.png" id="ins_vive"]
+[ext_resource type="Texture2D" path="res://art/escudo.png" id="ins_escudo"]
 
 [node name="Juego" type="Node2D"]
 script = ExtResource("1")
@@ -35,6 +41,7 @@ power_ups = Array[PackedScene]([ExtResource("10"), ExtResource("10"), ExtResourc
 target = NodePath("../Objetos")
 
 [node name="Motor" type="AudioStreamPlayer" parent="."]
+bus = &"Motor"
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -43,6 +50,161 @@ target = NodePath("../Objetos")
 [node name="FinRecorrido" parent="UI" instance=ExtResource("14")]
 visible = false
 
+[node name="Instrucciones" type="Panel" parent="UI"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -100.0
+offset_right = 80.0
+offset_bottom = 100.0
+mouse_filter = 2
+
+[node name="Contenido" type="VBoxContainer" parent="UI/Instrucciones"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+theme_override_constants/separation = 5
+
+[node name="Titulo" type="Label" parent="UI/Instrucciones/Contenido"]
+theme_override_colors/font_color = Color(0.941, 0.569, 0.122, 1)
+theme_override_font_sizes/font_size = 12
+layout_mode = 2
+text = "Cómo jugar"
+horizontal_alignment = 1
+
+[node name="Controles" type="Label" parent="UI/Instrucciones/Contenido"]
+theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
+theme_override_font_sizes/font_size = 8
+layout_mode = 2
+text = "Flechas izq. / der.: cambia de carril"
+horizontal_alignment = 1
+
+[node name="Esquiva" type="Label" parent="UI/Instrucciones/Contenido"]
+theme_override_colors/font_color = Color(0.941, 0.569, 0.122, 1)
+layout_mode = 2
+text = "Esquiva"
+horizontal_alignment = 1
+
+[node name="Fuerte" type="HBoxContainer" parent="UI/Instrucciones/Contenido"]
+layout_mode = 2
+
+[node name="Icono" type="TextureRect" parent="UI/Instrucciones/Contenido/Fuerte"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+texture_filter = 2
+texture = ExtResource("ins_camion")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texto" type="Label" parent="UI/Instrucciones/Contenido/Fuerte"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 8
+text = "Camión, valla, peatón: pierdes"
+autowrap_mode = 3
+
+[node name="Leve" type="HBoxContainer" parent="UI/Instrucciones/Contenido"]
+layout_mode = 2
+
+[node name="Icono" type="TextureRect" parent="UI/Instrucciones/Contenido/Leve"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+texture_filter = 2
+texture = ExtResource("ins_bici")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texto" type="Label" parent="UI/Instrucciones/Contenido/Leve"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 8
+text = "Bici, hueco: leve (2 = pierdes)"
+autowrap_mode = 3
+
+[node name="Recoge" type="Label" parent="UI/Instrucciones/Contenido"]
+theme_override_colors/font_color = Color(0.941, 0.569, 0.122, 1)
+layout_mode = 2
+text = "Recoge"
+horizontal_alignment = 1
+
+[node name="Gas" type="HBoxContainer" parent="UI/Instrucciones/Contenido"]
+layout_mode = 2
+
+[node name="Icono" type="TextureRect" parent="UI/Instrucciones/Contenido/Gas"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+texture_filter = 2
+texture = ExtResource("ins_gas")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texto" type="Label" parent="UI/Instrucciones/Contenido/Gas"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 8
+text = "Gasolina: se gasta con el tiempo"
+autowrap_mode = 3
+
+[node name="Turbo" type="HBoxContainer" parent="UI/Instrucciones/Contenido"]
+layout_mode = 2
+
+[node name="Icono" type="TextureRect" parent="UI/Instrucciones/Contenido/Turbo"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+texture_filter = 2
+texture = ExtResource("ins_vive")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texto" type="Label" parent="UI/Instrucciones/Contenido/Turbo"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 8
+text = "Speed Max: turbo invencible"
+autowrap_mode = 3
+
+[node name="Casco" type="HBoxContainer" parent="UI/Instrucciones/Contenido"]
+layout_mode = 2
+
+[node name="Icono" type="TextureRect" parent="UI/Instrucciones/Contenido/Casco"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+texture_filter = 2
+texture = ExtResource("ins_escudo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Texto" type="Label" parent="UI/Instrucciones/Contenido/Casco"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 8
+text = "Casco: aguanta un golpe leve"
+autowrap_mode = 3
+
+[node name="PulsaTecla" type="Label" parent="UI/Instrucciones/Contenido"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_colors/font_color = Color(0.941, 0.569, 0.122, 1)
+text = "Presiona cualquier tecla"
+horizontal_alignment = 1
+
+[node name="Pausa" parent="UI" instance=ExtResource("15")]
+unique_name_in_owner = true
+visible = false
+
+[connection signal="pause_pressed" from="UI/HUD" to="." method="pause"]
+[connection signal="menu" from="UI/Pausa" to="." method="go_menu"]
 [connection signal="crashed" from="Moto" to="." method="end_run"]
 [connection signal="picked" from="Moto" to="." method="_on_moto_picked"]
 [connection signal="retry" from="UI/FinRecorrido" to="." method="retry"]

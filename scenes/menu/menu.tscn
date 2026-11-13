@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" path="res://art/escudo.png" id="5"]
 [ext_resource type="PackedScene" path="res://scenes/ui/logo.tscn" id="6"]
 [ext_resource type="Texture2D" path="res://art/gamedev_logo.png" id="7"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ajustes_audio.tscn" id="8"]
 
 [sub_resource type="StyleBoxFlat" id="tarjeta"]
 bg_color = Color(1, 1, 1, 1)
@@ -133,8 +134,10 @@ layout_mode = 2
 [node name="Icono" type="TextureRect" parent="UI/Pantalla/Contenido/Inicio/Leyenda/Gas"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
+texture_filter = 2
 texture = ExtResource("3")
-stretch_mode = 3
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Texto" type="Label" parent="UI/Pantalla/Contenido/Inicio/Leyenda/Gas"]
 layout_mode = 2
@@ -147,13 +150,15 @@ layout_mode = 2
 [node name="Icono" type="TextureRect" parent="UI/Pantalla/Contenido/Inicio/Leyenda/Vive"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
+texture_filter = 2
 texture = ExtResource("4")
-stretch_mode = 3
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Texto" type="Label" parent="UI/Pantalla/Contenido/Inicio/Leyenda/Vive"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
-text = "Vive 100: turbo"
+text = "Speed Max: turbo"
 
 [node name="Escudo" type="HBoxContainer" parent="UI/Pantalla/Contenido/Inicio/Leyenda"]
 layout_mode = 2
@@ -161,8 +166,10 @@ layout_mode = 2
 [node name="Icono" type="TextureRect" parent="UI/Pantalla/Contenido/Inicio/Leyenda/Escudo"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
+texture_filter = 2
 texture = ExtResource("5")
-stretch_mode = 3
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Texto" type="Label" parent="UI/Pantalla/Contenido/Inicio/Leyenda/Escudo"]
 layout_mode = 2
@@ -173,7 +180,7 @@ text = "Casco: golpe leve"
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation = 3
 
 [node name="Subtitulo" type="Label" parent="UI/Pantalla/Contenido/Config"]
 layout_mode = 2
@@ -181,34 +188,28 @@ theme_override_font_sizes/font_size = 12
 text = "Configuración"
 horizontal_alignment = 1
 
-[node name="BrilloLabel" type="Label" parent="UI/Pantalla/Contenido/Config"]
-unique_name_in_owner = true
+[node name="FilaBrillo" type="HBoxContainer" parent="UI/Pantalla/Contenido/Config"]
 layout_mode = 2
-text = "Brillo: 100%"
-horizontal_alignment = 1
 
-[node name="Brillo" type="HSlider" parent="UI/Pantalla/Contenido/Config"]
+[node name="BrilloLabel" type="Label" parent="UI/Pantalla/Contenido/Config/FilaBrillo"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 16)
+custom_minimum_size = Vector2(76, 0)
 layout_mode = 2
+text = "Brillo 100%"
+
+[node name="Brillo" type="HSlider" parent="UI/Pantalla/Contenido/Config/FilaBrillo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = 0.5
 max_value = 1.5
 step = 0.05
 value = 1.0
 
-[node name="VolumenLabel" type="Label" parent="UI/Pantalla/Contenido/Config"]
-unique_name_in_owner = true
+[node name="AjustesAudio" parent="UI/Pantalla/Contenido/Config" instance=ExtResource("8")]
 layout_mode = 2
-text = "Volumen: 80%"
-horizontal_alignment = 1
-
-[node name="Volumen" type="HSlider" parent="UI/Pantalla/Contenido/Config"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 16)
-layout_mode = 2
-max_value = 1.0
-step = 0.05
-value = 0.8
 
 [node name="Volver" type="Button" parent="UI/Pantalla/Contenido/Config"]
 custom_minimum_size = Vector2(0, 18)
@@ -218,6 +219,5 @@ text = "Volver"
 [connection signal="pressed" from="UI/Pantalla/Contenido/Inicio/Iniciar" to="." method="start"]
 [connection signal="pressed" from="UI/Pantalla/Contenido/Inicio/Configuracion" to="." method="open_config"]
 [connection signal="pressed" from="UI/Pantalla/Contenido/Inicio/Salir" to="." method="quit_game"]
-[connection signal="value_changed" from="UI/Pantalla/Contenido/Config/Brillo" to="." method="_on_brillo_changed"]
-[connection signal="value_changed" from="UI/Pantalla/Contenido/Config/Volumen" to="." method="_on_volumen_changed"]
+[connection signal="value_changed" from="UI/Pantalla/Contenido/Config/FilaBrillo/Brillo" to="." method="_on_brillo_changed"]
 [connection signal="pressed" from="UI/Pantalla/Contenido/Config/Volver" to="." method="close_config"]

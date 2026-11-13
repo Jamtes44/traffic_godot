@@ -10,7 +10,9 @@ const FUEL_USE := 4.0  # % por segundo; tentativo
 const GAS_REFILL := 40.0
 const MENU := "res://scenes/menu/menu.tscn"
 
-var playing := true
+static var skip_help := false  # "Otra vez" arranca directo, sin instrucciones
+
+var playing := false  # arranca al cerrar las instrucciones
 var speed := BASE_SPEED
 var dist := 0.0
 var fuel := 100.0
@@ -25,7 +27,31 @@ var fuel := 100.0
 
 func _ready() -> void:
 	engine.stream = Audio.engine_loop
+	moto.active = false
+	if skip_help:
+		skip_help = false
+		begin()
+	else:
+		%Instrucciones.show()
+		create_tween().set_loops().tween_property(%PulsaTecla, "modulate:a", 0.2, 0.5).from(1.0)
+
+func begin() -> void:
+	%Instrucciones.hide()
+	playing = true
+	moto.active = true
 	engine.play()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if %Instrucciones.visible and event.is_pressed() and not event.is_echo():  # tecla, botón del control o clic
+		get_viewport().set_input_as_handled()
+		begin()
+	elif playing and event.is_action_pressed("ui_cancel"):  # Esc
+		get_viewport().set_input_as_handled()
+		pause()
+
+func pause() -> void:
+	if playing:
+		%Pausa.open()
 
 func _physics_process(delta: float) -> void:
 	if not playing:
@@ -35,7 +61,7 @@ func _physics_process(delta: float) -> void:
 	dist += v * delta / 10  # metros
 	fuel -= FUEL_USE * delta
 	road.scroll += v * delta
-	engine.pitch_scale = v / BASE_SPEED  # el motor suena más agudo con la velocidad
+	engine.pitch_scale = lerp(engine.pitch_scale, sqrt(v / BASE_SPEED), 0.1)  # sube suave y sin pasar de ~2.4x
 	for o in objects.get_children():
 		o.advance(v, delta)
 	spawner.tick(delta, speed)
@@ -46,8 +72,6 @@ func _physics_process(delta: float) -> void:
 
 func _process(_delta: float) -> void:
 	hud.refresh(dist, fuel, moto.shield, moto.hits, Moto.MAX_HITS, moto.turbo > 0)
-	if playing and Input.is_action_just_pressed("ui_cancel"):
-		go_menu()
 
 func _on_moto_picked(kind: String) -> void:
 	if kind == "gas":
@@ -60,6 +84,7 @@ func end_run(reason: String) -> void:
 	game_over.open(reason, int(dist))
 
 func retry() -> void:
+	skip_help = true
 	get_tree().reload_current_scene()
 
 func go_menu() -> void:
@@ -67,4 +92,9 @@ func go_menu() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_GO_BACK_REQUEST:  # botón Atrás del control de Android
-		go_menu()
+		if %Pausa.visible:
+			%Pausa.close()
+		elif playing:
+			pause()
+		else:
+			go_menu()

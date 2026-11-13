@@ -13,6 +13,27 @@ func _initialize() -> void:
 	moto = g.moto
 	g.spawner.active = false  # solo los objetos que pone el test
 
+	# instrucciones: el juego espera una tecla
+	check(g.get_node("%Instrucciones").visible and not g.playing, "instrucciones antes de arrancar")
+	var key := InputEventKey.new(); key.keycode = KEY_SPACE; key.pressed = true
+	root.push_input(key)
+	await process_frame
+	check(not g.get_node("%Instrucciones").visible and g.playing, "cualquier tecla arranca")
+
+	# música y pausa (sin Save.save(): el test no escribe en disco)
+	check(root.get_node("Audio").music.playing and root.get_node("Audio").music.bus == "Musica" and root.get_node("Audio").music.stream.loop, "música en loop")
+	var bus := AudioServer.get_bus_index("Musica")
+	root.get_node("Save").set_music_on(false)
+	check(AudioServer.is_bus_mute(bus) and not AudioServer.is_bus_mute(0), "silenciar solo la música")
+	check(g.engine.bus == "Motor" and g.engine.playing, "motor en su propio volumen")
+	root.get_node("Save").set_music_on(true)
+	var esc := InputEventAction.new(); esc.action = "ui_cancel"; esc.pressed = true
+	root.push_input(esc)
+	await process_frame
+	var pausa: Control = g.get_node("%Pausa")
+	check(pausa.visible and paused, "Esc abre la pausa")
+	pausa.hide(); paused = false
+
 	# golpe leve con casco: sigue vivo y pierde el casco
 	reset(); moto.shield = true; await hit("hueco")
 	check(g.playing and not moto.shield, "casco salva golpe leve")

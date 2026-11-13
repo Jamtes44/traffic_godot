@@ -30,6 +30,7 @@ func spawn(scene: PackedScene) -> RoadObject:
 			o.position = Vector2(Road.LEFT + Road.LANE_W * (randi() % (Road.LANES - 1) + 1), -25)
 		2:  # entra por una orilla y cruza
 			o.dir = 1.0 if randf() < 0.5 else -1.0
+			o.rotation = o.dir * PI / 2  # los sprites miran hacia arriba: girar hacia donde cruza
 			o.position = Vector2(Road.LEFT - 10 if o.dir > 0 else Road.RIGHT + 10, randf_range(-10, 40))
 		_:
 			o.position = Vector2(Road.lane_x(randi() % Road.LANES), -25)

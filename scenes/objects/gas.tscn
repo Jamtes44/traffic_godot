@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://art/gas.png" id="2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
-size = Vector2(8, 8)
+size = Vector2(10, 10)
 
 [node name="Gas" type="Area2D"]
 monitoring = false
@@ -12,6 +12,8 @@ script = ExtResource("1")
 kind = "gas"
 
 [node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 2
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("2")
 
 [node name="Forma" type="CollisionShape2D" parent="."]

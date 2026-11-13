@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scenes/ui/hud.gd" id="1"]
 [ext_resource type="Texture2D" path="res://art/gas.png" id="2"]
 [ext_resource type="Texture2D" path="res://art/escudo.png" id="3"]
+[ext_resource type="Texture2D" path="res://art/vida.png" id="4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fondo"]
 bg_color = Color(0.2, 0.2, 0.2, 1)
@@ -38,6 +39,18 @@ offset_bottom = 14.0
 text = "0 m"
 vertical_alignment = 1
 
+[node name="Pausa" type="Button" parent="Barra"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -9.0
+offset_top = 1.0
+offset_right = 9.0
+offset_bottom = 13.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 8
+text = "II"
+
 [node name="Casco" type="TextureRect" parent="Barra"]
 unique_name_in_owner = true
 visible = false
@@ -48,7 +61,10 @@ offset_left = -74.0
 offset_top = 3.0
 offset_right = -66.0
 offset_bottom = 11.0
+texture_filter = 2
 texture = ExtResource("3")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="IconoGas" type="TextureRect" parent="Barra"]
 layout_mode = 1
@@ -58,7 +74,10 @@ offset_left = -62.0
 offset_top = 2.0
 offset_right = -54.0
 offset_bottom = 12.0
+texture_filter = 2
 texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Gasolina" type="ProgressBar" parent="Barra"]
 unique_name_in_owner = true
@@ -74,17 +93,31 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_lleno")
 value = 100.0
 show_percentage = false
 
-[node name="Golpes" type="Label" parent="."]
+[node name="Vidas" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 offset_left = 3.0
-offset_top = 16.0
-offset_right = 100.0
-offset_bottom = 28.0
-theme_override_colors/font_color = Color(1, 0.32, 0.32, 1)
-theme_override_font_sizes/font_size = 8
-text = "Golpe leve 1/2"
+offset_top = 17.0
+offset_right = 40.0
+offset_bottom = 25.0
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Vida1" type="TextureRect" parent="Vidas"]
+custom_minimum_size = Vector2(9, 8)
+layout_mode = 2
+texture_filter = 2
+texture = ExtResource("4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Vida2" type="TextureRect" parent="Vidas"]
+custom_minimum_size = Vector2(9, 8)
+layout_mode = 2
+texture_filter = 2
+texture = ExtResource("4")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Turbo" type="Label" parent="."]
 unique_name_in_owner = true
@@ -99,3 +132,5 @@ offset_bottom = 30.0
 theme_override_colors/font_color = Color(1, 0.84, 0, 1)
 text = "TURBO"
 horizontal_alignment = 1
+
+[connection signal="pressed" from="Barra/Pausa" to="." method="_on_pausa_pressed"]
